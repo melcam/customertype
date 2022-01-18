@@ -1,0 +1,7 @@
+server:
+  port: 8092
+spring:
+  data:
+    mongodb:
+      # atlas
+      uri: "mongodb+srv://rommel:proyectobootcamp@bootcamp.9fgvk.mongodb.net/bootcamp?retryWrites=true&w=majority"
