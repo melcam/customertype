@@ -13,7 +13,7 @@ public interface CustomertypeService {
 
   Mono<Customertype> update(Customertype customertype);
 
-  Mono<Customertype> delete(String customertypeId);
+  Mono<Customertype> change(Customertype customertype);
 
-  Mono<Customertype> activate(Customertype customertype);
+  Mono<Customertype> delete(String id);
 }

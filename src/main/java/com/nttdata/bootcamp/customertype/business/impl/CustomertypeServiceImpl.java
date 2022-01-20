@@ -36,38 +36,16 @@ public class CustomertypeServiceImpl implements CustomertypeService {
   }
 
   @Override
-  public Mono<Customertype> delete(String customertypeId) {
-    Mono<Customertype> type = customertypeRepository.findById(customertypeId);
-
-    if (type != null) {
-      Mono<Customertype> type2 = Mono.fromCallable(()->{
-        Customertype customertype = new Customertype();
-        customertype.setType("Nuevo");
-        customertype.setStatus(true);
-        customertype.setDescription("Desc");
-        return customertype;
-      });
-      type2.subscribe(e->customertypeRepository.save(e));
-
-
-      //  System.out.println(x);
-      //  x.setStatus(false);
-        // customertypeRepository.save(x);
-      //});
-
-      return null;
-    } else {
-      return null;
-    }
+  public Mono<Customertype> change(Customertype customertype) {
+    return customertypeRepository.findById(customertype.getId()).flatMap(ct -> {
+      return create(customertype);
+    }).switchIfEmpty(Mono.empty());
   }
+
   @Override
-  public Mono<Customertype> activate(Customertype customertype) {
-    Mono<Customertype> type = customertypeRepository.findById(customertype.getId());
-    if (type != null) {
-      customertype.setStatus(true);
-      return customertypeRepository.save(customertype);
-    } else {
-      return customertypeRepository.save(customertype);
-    }
+  public Mono<Customertype> delete(String id) {
+    return customertypeRepository.findById(id)
+        .flatMap(ct -> customertypeRepository.deleteById(ct.getId()).thenReturn(ct));
   }
+
 }
